@@ -43,7 +43,7 @@ def test_sort_geo_zones(driver):
     driver.get("http://localhost/litecart/admin/?app=geo_zones&doc=geo_zones")
     all_elements = len(driver.find_elements_by_xpath("//tr[@class='row']"))
     for element in range(all_elements):
-        driver.find_element_by_xpath("//*[@class='row']/td[3]/a").click()
+        driver.find_elements_by_xpath("//*[@class='row']/td[3]/a")[element].click()
         zone = len(driver.find_elements_by_css_selector('#table-zones tr'))
         zones = []
         for z in range(2, zone):

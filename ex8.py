@@ -1,5 +1,6 @@
 import pytest
 from selenium import webdriver
+from selenium.common.exceptions import NoSuchElementException
 
 
 @pytest.fixture
@@ -10,19 +11,14 @@ def driver(request):
 
 
 def test_stic(driver):
-    driver.get("http://localhost/litecart/admin")
-    driver.find_element_by_name("username").send_keys("admin")
-    driver.find_element_by_name("password").send_keys("admin")
-    driver.find_element_by_name("login").click()
     driver.get("http://localhost/litecart/")
-    products = len(driver.find_elements_by_css_selector(".image-wrapper"))
-    print(products, "товаров")
-    stickers = len(driver.find_elements_by_class_name("sticker"))
-    print(stickers, "стикеров")
+    products = driver.find_elements_by_css_selector(".image-wrapper")
+    print(len(products), "товаров")
+
     count = 0
-    while count < products:
-        for i in range(products):
-            driver.find_elements_by_css_selector('.sticker')[i]
-            print(f"на товаре {i} - один стикер")
-            count += 1
-    assert products == stickers, f"{products} товаров и {stickers} стикеров должны совпадать"
+    while count < len(products):
+        for i in products:
+            sticker = i.find_elements_by_xpath(".//div[starts-with(@class,'sticker')]")
+            count += len(sticker)
+            # print(count)
+    assert len(products) == count, f"{products} товаров и {count} стикеров должны совпадать"
