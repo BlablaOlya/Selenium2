@@ -22,20 +22,16 @@ def test_product(driver):
     # скидочная цена на гл стр
     text_campaign_price = campaign_price.text
     # цвет обычной цены на гл стр
-    grey_color =[]
-    color_product_regular_price = regular_price.value_of_css_property('text-decoration-color')
-    grey_color.append(color_product_regular_price)
-    assert color_product_regular_price in grey_color
+    color_product_regular_price = regular_price.value_of_css_property('color')
+    assert color_product_regular_price == "rgb(119, 119, 119)"
     # цвет скидочной цены на гл стр
-    red_color = []
-    color_product_campaign_price = campaign_price.value_of_css_property('text-decoration-color')
-    red_color.append(color_product_campaign_price)
-    assert color_product_campaign_price in red_color
+    color_product_campaign_price = campaign_price.value_of_css_property('color')
+    assert color_product_campaign_price == "rgb(204, 0, 0)"
     # резмер текста обычной цена товара на гл стр
     size_product_regular_price = regular_price.value_of_css_property('font-size')
     # резмер текста скидочной цена товара на гл стр
     size_product_campaign_price = campaign_price.value_of_css_property('font-size')
-    assert size_product_campaign_price > size_product_regular_price
+    assert float(size_product_campaign_price[:-2]) > float(size_product_regular_price[:-2])
     # обычная цена зачеркнута
     line_product_regular_price = regular_price.value_of_css_property('text-decoration-line')
     assert line_product_regular_price == 'line-through'
@@ -53,15 +49,13 @@ def test_product(driver):
     assert text_regular_price == text_page_regular_price
     text_page_campaign_price = page_campaign_price.text
     assert text_campaign_price == text_page_campaign_price
-    color_page_regular_price = page_regular_price.value_of_css_property('text-decoration-color')
-    grey_color.append(color_page_regular_price)
-    assert color_page_regular_price in grey_color
-    color_page_campaign_price = page_campaign_price.value_of_css_property('text-decoration-color')
-    red_color.append(color_page_campaign_price)
-    assert color_page_campaign_price in red_color
+    color_page_regular_price = page_regular_price.value_of_css_property('color')
+    assert color_page_regular_price == "rgb(102, 102, 102)"
+    color_page_campaign_price = page_campaign_price.value_of_css_property('color')
+    assert color_page_campaign_price == "rgb(204, 0, 0)"
     size_page_campaign_price = page_campaign_price.value_of_css_property('font-size')
     size_page_regular_price = page_regular_price.value_of_css_property('font-size')
-    assert size_page_campaign_price > size_page_regular_price
+    assert float(size_page_campaign_price[:-2]) > float(size_page_regular_price[:-2])
     line_page_regular_price = page_regular_price.value_of_css_property('text-decoration-line')
     assert line_page_regular_price == 'line-through'
 

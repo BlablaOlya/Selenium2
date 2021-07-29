@@ -32,6 +32,8 @@ def test_registration(driver):
     zones = driver.find_elements_by_xpath("//select[@name='zone_code']/option")
     for z in zones:
         zone_code.append(z.get_attribute("value"))
+    driver.implicitly_wait(5)
+    print(zone_code)
     Select(driver.find_element_by_css_selector("select[name=zone_code]")).select_by_value(random.choice(zone_code))
     email = random.choice(emails) + random.choice(domain)
     driver.find_element_by_name("email").send_keys(email)
